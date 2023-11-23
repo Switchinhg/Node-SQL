@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/users/login'
+const url = 'http://localhost:3000/api/users/login'
 
 let form = document.getElementById("form")
 let error = document.getElementById("error")
@@ -20,6 +20,11 @@ const login = async(e) =>{
     if(response.ok){
         success.innerText = response.msg
         error.innerText = ''
+        localStorage.setItem('logged',true)
+        localStorage.setItem('user-data' , JSON.stringify(response.user))
+        setTimeout(() => {
+            window.location = "../index.html"
+        }, 2000);
     }else{
         success.innerText = ''
         error.innerText = response.msg
@@ -30,4 +35,5 @@ const login = async(e) =>{
 form.addEventListener('submit', e =>{
     e.preventDefault()
     login(e)
+
 })

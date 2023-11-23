@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000/users/register'
+const url = 'http://localhost:3000/api/users/register'
 
 let form = document.getElementById("form")
 let error = document.getElementById("error")
@@ -17,10 +17,16 @@ const register = async(e) =>{
             "Content-Type": "application/json",
           },
     })
+    console.log(await data)
     const response = await data.json()
     if(response.ok){
-        success.innerText = response.msg
+        success.innerText = "user registered!"
         error.innerText = ''
+        localStorage.setItem('logged',true)
+        localStorage.setItem('user-data' , JSON.stringify(response.data))
+        setTimeout(() => {
+                window.location = "../index.html"
+        }, 2000);
     }else{
         success.innerText = ''
         error.innerText = response.msg
